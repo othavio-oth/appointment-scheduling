@@ -11,10 +11,16 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity(name = "health_professionals")
 @Data
+@NoArgsConstructor
 public class HealthProfessional {
+
+    public HealthProfessional(UUID id) {
+        this.id = id;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

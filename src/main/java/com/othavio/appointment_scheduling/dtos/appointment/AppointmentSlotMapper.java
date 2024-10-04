@@ -1,10 +1,10 @@
 package com.othavio.appointment_scheduling.dtos.appointment;
 
-import com.othavio.appointment_scheduling.dtos.pacient.PacientMapper;
 import com.othavio.appointment_scheduling.dtos.professional.HealthProfessionalMapper;
 import com.othavio.appointment_scheduling.model.AppointmentSlot;
+import com.othavio.appointment_scheduling.model.HealthProfessional;
 
-public class AppointmentMapper {
+public class AppointmentSlotMapper {
 
     public static AppointmentDTO toDTO(AppointmentSlot appointment) {
         AppointmentDTO dto = new AppointmentDTO();
@@ -13,7 +13,6 @@ public class AppointmentMapper {
         dto.setEndTime(appointment.getEndTime());
         dto.setCanceled(appointment.isCanceled());
         dto.setAvailable(appointment.isAvailable());
-        dto.setPacient(PacientMapper.toDTO(appointment.getPacient()));
         dto.setHealthProfessional(HealthProfessionalMapper.toDTO(appointment.getHealthProfessional()));
         return dto;
     }
@@ -25,8 +24,7 @@ public class AppointmentMapper {
         appointment.setEndTime(dto.getEndTime());
         appointment.setCanceled(dto.isCanceled());
         appointment.setAvailable(dto.isAvailable());
-        appointment.setPacient(PacientMapper.toModel(dto.getPacient()));
-        appointment.setHealthProfessional(HealthProfessionalMapper.toModel(dto.getHealthProfessional()));
+        appointment.setHealthProfessional(new HealthProfessional(dto.getHealthProfessional().getId()));
         return appointment;
     }
 

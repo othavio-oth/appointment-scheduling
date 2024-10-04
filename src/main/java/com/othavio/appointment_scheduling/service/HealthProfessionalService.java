@@ -2,9 +2,11 @@ package com.othavio.appointment_scheduling.service;
 
 import java.util.List;
 import java.util.UUID;
-import com.othavio.appointment_scheduling.model.HealthProfessional;
+
 import org.springframework.stereotype.Service;
 
+import com.othavio.appointment_scheduling.exceptions.NotFoundException;
+import com.othavio.appointment_scheduling.model.HealthProfessional;
 import com.othavio.appointment_scheduling.repositories.HealthProfessionalRepository;
 
 import lombok.AllArgsConstructor;
@@ -24,11 +26,13 @@ public class HealthProfessionalService {
     }
 
     public void deleteById(UUID id) {
-        healthProfessionalRepository.deleteById(id);
+        HealthProfessional healthProfessional = findById(id);
+        healthProfessionalRepository.delete(healthProfessional);
     }
 
     public HealthProfessional findById(UUID id) {
-        return healthProfessionalRepository.findById(id).orElse(null);
+        return healthProfessionalRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Health professional not found with id: " + id));
     }
 
 }

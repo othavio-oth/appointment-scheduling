@@ -26,10 +26,6 @@ public class AppointmentSlot {
     private boolean canceled;
     private boolean available;
 
-    @ManyToOne
-    @JoinColumn(name = "pacient_id", nullable = true)
-    private Pacient pacient;
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "health_professional_id", nullable = false)
     private HealthProfessional healthProfessional;
