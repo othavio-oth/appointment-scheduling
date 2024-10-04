@@ -6,8 +6,8 @@ import com.othavio.appointment_scheduling.model.HealthProfessional;
 
 public class AppointmentSlotMapper {
 
-    public static AppointmentDTO toDTO(AppointmentSlot appointment) {
-        AppointmentDTO dto = new AppointmentDTO();
+    public static AppointmentSlotDTO toDTO(AppointmentSlot appointment) {
+        AppointmentSlotDTO dto = new AppointmentSlotDTO();
         dto.setId(appointment.getId());
         dto.setStartTime(appointment.getStartTime());
         dto.setEndTime(appointment.getEndTime());
@@ -17,14 +17,14 @@ public class AppointmentSlotMapper {
         return dto;
     }
 
-    public static AppointmentSlot toModel(AppointmentDTO dto) {
+    public static AppointmentSlot fromCreateDTOToModel(CreateAppointmentSlotDTO dto) {
         AppointmentSlot appointment = new AppointmentSlot();
         appointment.setId(dto.getId());
         appointment.setStartTime(dto.getStartTime());
         appointment.setEndTime(dto.getEndTime());
         appointment.setCanceled(dto.isCanceled());
         appointment.setAvailable(dto.isAvailable());
-        appointment.setHealthProfessional(new HealthProfessional(dto.getHealthProfessional().getId()));
+        appointment.setHealthProfessional(new HealthProfessional(dto.getHealthProfessionalId()));
         return appointment;
     }
 

@@ -8,7 +8,7 @@ import com.othavio.appointment_scheduling.dtos.professional.HealthProfessionalDT
 import lombok.Data;
 
 @Data
-public class AppointmentDTO {
+public class AppointmentSlotDTO {
 
     private UUID id;
     private LocalDateTime startTime;
