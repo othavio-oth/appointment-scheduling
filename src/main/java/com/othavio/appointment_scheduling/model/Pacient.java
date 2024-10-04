@@ -9,11 +9,19 @@ import org.hibernate.annotations.UpdateTimestamp;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity(name = "pacients")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Pacient {
+
+    public Pacient(UUID id) {
+        this.id = id;
+    }
 
     @Id
     @GeneratedValue

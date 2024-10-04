@@ -13,10 +13,14 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity(name = "appointment_slots")
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class AppointmentSlot {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -25,6 +29,10 @@ public class AppointmentSlot {
     private LocalDateTime endTime;
     private boolean canceled;
     private boolean available;
+
+    public AppointmentSlot(UUID id) {
+        this.id = id;
+    }
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "health_professional_id", nullable = false)
