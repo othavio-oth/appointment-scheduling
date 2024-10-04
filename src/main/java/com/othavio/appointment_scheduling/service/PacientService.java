@@ -6,6 +6,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.othavio.appointment_scheduling.exceptions.PacientNotFoundException;
 import com.othavio.appointment_scheduling.model.Pacient;
 import com.othavio.appointment_scheduling.repositories.PacientRepository;
 
@@ -27,7 +28,8 @@ public class PacientService {
     }
 
     public Pacient findById(UUID id) {
-        return pacientRepository.findById(id).orElse(null);
+        return pacientRepository.findById(id)
+                .orElseThrow(() -> new PacientNotFoundException("Pacient not found with id: " + id));
     }
 
     public void deleteById(UUID id) {

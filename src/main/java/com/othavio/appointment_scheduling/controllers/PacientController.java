@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.othavio.appointment_scheduling.dtos.pacient.PacientDTO;
 import com.othavio.appointment_scheduling.dtos.pacient.PacientMapper;
+import com.othavio.appointment_scheduling.exceptions.InvalidUUIDFormatException;
 import com.othavio.appointment_scheduling.model.Pacient;
 import com.othavio.appointment_scheduling.service.PacientService;
 
@@ -62,16 +63,16 @@ public class PacientController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PacientDTO> getPacientById(@PathVariable UUID id) {
+    public ResponseEntity<PacientDTO> getPacientById(@PathVariable String id) {
         try {
-            Pacient pacient = pacientService.findById(id);
+            UUID pacientId = UUID.fromString(id);
+            Pacient pacient = pacientService.findById(pacientId);
             PacientDTO pacientDTO = PacientMapper.toDTO(pacient);
             return ResponseEntity.ok(pacientDTO);
-        } catch (Exception e) {
-            return ResponseEntity
-                    .status(HttpStatus.NOT_FOUND)
-                    .build();
+        } catch (IllegalArgumentException e) {
+            throw new InvalidUUIDFormatException("Invalid id format.");
         }
+
     }
 
 }
