@@ -1,6 +1,7 @@
 package com.othavio.appointment_scheduling.controllers;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,8 +26,13 @@ public class HealthProfessionalController {
     private final HealthProfessionalService healthProfessionalService;
 
     @GetMapping("")
-    public List<HealthProfessional> getHealthProfessionals() {
-        return healthProfessionalService.findAll();
+    public ResponseEntity<List<HealthProfessionalDTO>> getHealthProfessionals() {
+
+        List<HealthProfessional> healthProfessionals = healthProfessionalService.findAll();
+        List<HealthProfessionalDTO> healthProfessionalsDTO = healthProfessionals.stream()
+                .map(HealthProfessionalMapper::toDTO).collect(Collectors.toList());
+
+        return ResponseEntity.ok(healthProfessionalsDTO);
     }
 
     @PostMapping
