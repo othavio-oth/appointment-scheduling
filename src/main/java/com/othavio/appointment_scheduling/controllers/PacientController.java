@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +22,7 @@ import com.othavio.appointment_scheduling.exceptions.InvalidUUIDFormatException;
 import com.othavio.appointment_scheduling.model.Pacient;
 import com.othavio.appointment_scheduling.service.PacientService;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 @RestController
@@ -49,18 +51,14 @@ public class PacientController {
     }
 
     @PostMapping("")
-    public ResponseEntity<PacientDTO> createPacient(@RequestBody PacientDTO pacientDTO) {
-        try {
-            Pacient pacient = pacientService.save(PacientMapper.toModel(pacientDTO));
-            PacientDTO createdPacientDTO = PacientMapper.toDTO(pacient);
-            return ResponseEntity
-                    .status(HttpStatus.CREATED)
-                    .body(createdPacientDTO);
-        } catch (Exception e) {
-            return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .build();
-        }
+    public ResponseEntity<PacientDTO> createPacient(@Valid @RequestBody PacientDTO pacientDTO) {
+        System.out.println("WHY ARE YOU HERE?");
+        Pacient pacient = pacientService.save(PacientMapper.toModel(pacientDTO));
+        PacientDTO createdPacientDTO = PacientMapper.toDTO(pacient);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(createdPacientDTO);
+
     }
 
     @GetMapping("/{id}")
@@ -84,6 +82,13 @@ public class PacientController {
         } catch (IllegalArgumentException e) {
             throw new InvalidUUIDFormatException();
         }
+    }
+
+    @GetMapping("/cpf/{cpf}")
+    public ResponseEntity<PacientDTO> getPacientByCpf(@PathVariable String cpf) {
+        Pacient pacient = pacientService.findByCpf(cpf);
+        PacientDTO pacientDTO = PacientMapper.toDTO(pacient);
+        return ResponseEntity.ok(pacientDTO);
     }
 
 }

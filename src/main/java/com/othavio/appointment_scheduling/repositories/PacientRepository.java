@@ -10,4 +10,6 @@ import com.othavio.appointment_scheduling.model.Pacient;
 @Repository
 public interface PacientRepository extends JpaRepository<Pacient, UUID> {
 
+    Pacient findByCpf(String cpf);
+
 }

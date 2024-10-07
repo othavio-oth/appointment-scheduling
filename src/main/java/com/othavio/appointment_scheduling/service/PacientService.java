@@ -37,4 +37,9 @@ public class PacientService {
         pacientRepository.delete(pacient);
     }
 
+    public Pacient findByCpf(String cpf) {
+        return pacientRepository.findByCpf(cpf);
+
+    }
+
 }

@@ -5,10 +5,15 @@ import java.util.UUID;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.validator.constraints.br.CPF;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,10 +29,17 @@ public class Pacient {
     }
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
+
     private String name;
+
+    @Column(unique = true)
+    private String cpf;
+
+    @Column(unique = true)
     private String email;
+
     @CreationTimestamp
     private LocalDateTime dateCreated;
 
