@@ -1,6 +1,8 @@
 package com.othavio.appointment_scheduling.controllers;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.othavio.appointment_scheduling.dtos.appointment.AppointmentSlotDTO;
@@ -58,5 +61,14 @@ public class AppointmentSlotController {
         } catch (IllegalArgumentException e) {
             throw new InvalidUUIDFormatException();
         }
+    }
+
+    @GetMapping("/professional-id")
+    public ResponseEntity<List<AppointmentSlotDTO>> getAppointmentSlotsByProfessionalId(@RequestParam UUID id) {
+        List<AppointmentSlot> appointmentSlots = appointmentSlotService.findByHealthProfessionalId(id);
+        List<AppointmentSlotDTO> appointmentSlotDTOs = appointmentSlots.stream()
+                .map(AppointmentSlotMapper::toDTO)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(appointmentSlotDTOs);
     }
 }

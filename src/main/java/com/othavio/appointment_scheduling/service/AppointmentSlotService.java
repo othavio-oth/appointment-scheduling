@@ -43,4 +43,8 @@ public class AppointmentSlotService {
         AppointmentSlot appointmentSlot = findById(id);
         appointmentSlotRepository.delete(appointmentSlot);
     }
+
+    public List<AppointmentSlot> findByHealthProfessionalId(UUID healthProfessionalId) {
+        return appointmentSlotRepository.findByHealthProfessionalId(healthProfessionalId);
+    }
 }
