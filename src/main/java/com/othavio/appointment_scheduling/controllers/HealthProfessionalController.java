@@ -18,6 +18,7 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @AllArgsConstructor
@@ -47,6 +48,14 @@ public class HealthProfessionalController {
                                 .status(HttpStatus.CREATED)
                                 .body(healthProfessionalDTO);
 
+        }
+
+        @GetMapping("/cpf")
+        public ResponseEntity<HealthProfessionalDTO> getProfessionalByCpf(@RequestParam String cpf) {
+
+                HealthProfessional healthProfessional = healthProfessionalService.findByCpf(cpf);
+                HealthProfessionalDTO healthProfessionalDTO = HealthProfessionalMapper.toDTO(healthProfessional);
+                return ResponseEntity.ok(healthProfessionalDTO);
         }
 
 }

@@ -35,4 +35,10 @@ public class HealthProfessionalService {
                 .orElseThrow(() -> new NotFoundException("Health professional not found with id: " + id));
     }
 
+    public HealthProfessional findByCpf(String cpf) {
+        return healthProfessionalRepository.findByCpf(cpf);
+        // TODO: Add exception handling
+
+    }
+
 }

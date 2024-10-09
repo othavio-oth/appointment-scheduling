@@ -10,4 +10,6 @@ import com.othavio.appointment_scheduling.model.HealthProfessional;
 @Repository
 public interface HealthProfessionalRepository extends JpaRepository<HealthProfessional, UUID> {
 
+    HealthProfessional findByCpf(String cpf);
+
 }
