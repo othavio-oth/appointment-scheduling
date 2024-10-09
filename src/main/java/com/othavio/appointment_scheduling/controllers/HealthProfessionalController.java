@@ -29,12 +29,18 @@ public class HealthProfessionalController {
 
         @GetMapping("")
         public ResponseEntity<List<HealthProfessionalDTO>> getHealthProfessionals() {
-
                 List<HealthProfessional> healthProfessionals = healthProfessionalService.findAll();
                 List<HealthProfessionalDTO> healthProfessionalsDTO = healthProfessionals.stream()
-                                .map(HealthProfessionalMapper::toDTO).collect(Collectors.toList());
-
+                                .map(HealthProfessionalMapper::toDTO)
+                                .collect(Collectors.toList());
                 return ResponseEntity.ok(healthProfessionalsDTO);
+        }
+
+        @GetMapping("/cpf")
+        public ResponseEntity<HealthProfessionalDTO> getProfessionalByCpf(@RequestParam String cpf) {
+                HealthProfessional healthProfessional = healthProfessionalService.findByCpf(cpf);
+                HealthProfessionalDTO healthProfessionalDTO = HealthProfessionalMapper.toDTO(healthProfessional);
+                return ResponseEntity.ok(healthProfessionalDTO);
         }
 
         @PostMapping
@@ -49,13 +55,4 @@ public class HealthProfessionalController {
                                 .body(healthProfessionalDTO);
 
         }
-
-        @GetMapping("/cpf")
-        public ResponseEntity<HealthProfessionalDTO> getProfessionalByCpf(@RequestParam String cpf) {
-
-                HealthProfessional healthProfessional = healthProfessionalService.findByCpf(cpf);
-                HealthProfessionalDTO healthProfessionalDTO = HealthProfessionalMapper.toDTO(healthProfessional);
-                return ResponseEntity.ok(healthProfessionalDTO);
-        }
-
 }

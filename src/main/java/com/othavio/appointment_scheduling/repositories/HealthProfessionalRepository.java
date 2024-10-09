@@ -1,5 +1,6 @@
 package com.othavio.appointment_scheduling.repositories;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,6 +11,5 @@ import com.othavio.appointment_scheduling.model.HealthProfessional;
 @Repository
 public interface HealthProfessionalRepository extends JpaRepository<HealthProfessional, UUID> {
 
-    HealthProfessional findByCpf(String cpf);
-
+    Optional<HealthProfessional> findByCpf(String cpf);
 }

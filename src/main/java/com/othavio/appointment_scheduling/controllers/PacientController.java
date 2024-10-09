@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.othavio.appointment_scheduling.dtos.pacient.PacientDTO;
@@ -51,7 +52,6 @@ public class PacientController {
 
     @PostMapping("")
     public ResponseEntity<PacientDTO> createPacient(@Valid @RequestBody PacientDTO pacientDTO) {
-        System.out.println("WHY ARE YOU HERE?");
         Pacient pacient = pacientService.save(PacientMapper.toModel(pacientDTO));
         PacientDTO createdPacientDTO = PacientMapper.toDTO(pacient);
         return ResponseEntity
@@ -83,8 +83,8 @@ public class PacientController {
         }
     }
 
-    @GetMapping("/cpf/{cpf}")
-    public ResponseEntity<PacientDTO> getPacientByCpf(@PathVariable String cpf) {
+    @GetMapping("/cpf")
+    public ResponseEntity<PacientDTO> getPacientByCpf(@RequestParam String cpf) {
         Pacient pacient = pacientService.findByCpf(cpf);
         PacientDTO pacientDTO = PacientMapper.toDTO(pacient);
         return ResponseEntity.ok(pacientDTO);

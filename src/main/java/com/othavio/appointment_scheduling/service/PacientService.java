@@ -38,7 +38,8 @@ public class PacientService {
     }
 
     public Pacient findByCpf(String cpf) {
-        return pacientRepository.findByCpf(cpf);
+        return pacientRepository.findByCpf(cpf)
+                .orElseThrow(() -> new NotFoundException("Pacient not found with cpf: " + cpf));
 
     }
 

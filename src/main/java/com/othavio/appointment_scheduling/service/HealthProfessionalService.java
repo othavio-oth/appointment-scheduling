@@ -36,8 +36,8 @@ public class HealthProfessionalService {
     }
 
     public HealthProfessional findByCpf(String cpf) {
-        return healthProfessionalRepository.findByCpf(cpf);
-        // TODO: Add exception handling
+        return healthProfessionalRepository.findByCpf(cpf)
+                .orElseThrow(() -> new NotFoundException("Health professional not found with cpf: " + cpf));
 
     }
 
