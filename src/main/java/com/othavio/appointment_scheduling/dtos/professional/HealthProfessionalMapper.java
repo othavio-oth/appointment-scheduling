@@ -9,6 +9,7 @@ public class HealthProfessionalMapper {
         dto.setId(healthProfessional.getId());
         dto.setName(healthProfessional.getName());
         dto.setEmail(healthProfessional.getEmail());
+        dto.setCpf(healthProfessional.getCpf());
         return dto;
     }
 
@@ -17,6 +18,7 @@ public class HealthProfessionalMapper {
         healthProfessional.setId(dto.getId());
         healthProfessional.setName(dto.getName());
         healthProfessional.setEmail(dto.getEmail());
+        healthProfessional.setCpf(dto.getCpf());
         return healthProfessional;
     }
 

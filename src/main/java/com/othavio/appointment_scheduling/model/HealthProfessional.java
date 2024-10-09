@@ -6,6 +6,7 @@ import java.util.UUID;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -27,7 +28,12 @@ public class HealthProfessional {
     private UUID id;
 
     private String name;
+
+    @Column(unique = true)
     private String email;
+
+    @Column(unique = true)
+    private String cpf;
 
     @CreationTimestamp
     private LocalDateTime dateCreated;

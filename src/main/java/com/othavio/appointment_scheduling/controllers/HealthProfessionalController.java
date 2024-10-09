@@ -14,6 +14,7 @@ import com.othavio.appointment_scheduling.dtos.professional.HealthProfessionalMa
 import com.othavio.appointment_scheduling.model.HealthProfessional;
 import com.othavio.appointment_scheduling.service.HealthProfessionalService;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,29 +24,29 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RequestMapping("v1/health-professionals")
 public class HealthProfessionalController {
 
-    private final HealthProfessionalService healthProfessionalService;
+        private final HealthProfessionalService healthProfessionalService;
 
-    @GetMapping("")
-    public ResponseEntity<List<HealthProfessionalDTO>> getHealthProfessionals() {
+        @GetMapping("")
+        public ResponseEntity<List<HealthProfessionalDTO>> getHealthProfessionals() {
 
-        List<HealthProfessional> healthProfessionals = healthProfessionalService.findAll();
-        List<HealthProfessionalDTO> healthProfessionalsDTO = healthProfessionals.stream()
-                .map(HealthProfessionalMapper::toDTO).collect(Collectors.toList());
+                List<HealthProfessional> healthProfessionals = healthProfessionalService.findAll();
+                List<HealthProfessionalDTO> healthProfessionalsDTO = healthProfessionals.stream()
+                                .map(HealthProfessionalMapper::toDTO).collect(Collectors.toList());
 
-        return ResponseEntity.ok(healthProfessionalsDTO);
-    }
+                return ResponseEntity.ok(healthProfessionalsDTO);
+        }
 
-    @PostMapping
-    public ResponseEntity<HealthProfessionalDTO> createHealthProfessional(
-            @RequestBody HealthProfessionalDTO createHealthProfessionalDTO) {
+        @PostMapping
+        public ResponseEntity<HealthProfessionalDTO> createHealthProfessional(
+                        @Valid @RequestBody HealthProfessionalDTO createHealthProfessionalDTO) {
 
-        HealthProfessional healthProfessional = healthProfessionalService
-                .save(HealthProfessionalMapper.toModel(createHealthProfessionalDTO));
-        HealthProfessionalDTO healthProfessionalDTO = HealthProfessionalMapper.toDTO(healthProfessional);
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(healthProfessionalDTO);
+                HealthProfessional healthProfessional = healthProfessionalService
+                                .save(HealthProfessionalMapper.toModel(createHealthProfessionalDTO));
+                HealthProfessionalDTO healthProfessionalDTO = HealthProfessionalMapper.toDTO(healthProfessional);
+                return ResponseEntity
+                                .status(HttpStatus.CREATED)
+                                .body(healthProfessionalDTO);
 
-    }
+        }
 
 }
